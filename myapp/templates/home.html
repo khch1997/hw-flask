@@ -1,27 +1,9 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %}
 
-<head>
-  {% if title %}
-  <title>{{title}}!</title>
-  {% else %}
-  <title>Home</title>
-  {% endif %}
-</head>
-
-<body>
-  {% if name %}
-  <h1>Welcome {{name}}, here are top destinations!</h1>
-  {% else %}
-  <h1>Welcome Khanh, here are top destinations!</h1>
-  {% endif %}
-  <a href='https://www.google.com'>goooogle</a>
-
-  <ul>
-    {% for city in top_cities %}
-    <li>{{city}}</li>
-    {% endfor %}
-  </ul>
-</body>
-
-</html>
+{% block content %}
+<ul>
+  {% for city in top_cities %}
+  <li>{{city}}</li>
+  {% endfor %}
+</ul>
+{% endblock %}
