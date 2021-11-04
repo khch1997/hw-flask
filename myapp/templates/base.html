@@ -3,7 +3,7 @@
 
 <head>
   {% if title %}
-  <title>{{title}}!</title>
+  <title>{{title}}</title>
   {% else %}
   <title>Home</title>
   {% endif %}
@@ -16,6 +16,16 @@
   <h1>Welcome Khanh, here are top destinations!</h1>
   {% endif %}
   <a href='https://www.google.com'>goooogle</a>
+
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+  <ul>
+    {% for m in messages %}
+    <li>{{ m }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+  {% endwith %}
 
   {% block content %}
   {% endblock %}
