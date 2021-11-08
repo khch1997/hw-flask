@@ -7,4 +7,4 @@ class City(db.Model):
   is_visited = db.Column(db.Boolean)
 
   def __repr__(self):
-    return f'<City {self.id}: {self.name} {self.rank}>'
+    return f'{self.name} [{self.rank}]'
