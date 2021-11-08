@@ -2,18 +2,31 @@ from myapp import myapp_obj
 from myapp.forms import TopCities
 from flask import render_template, flash, redirect
 
-# Fake database for now
-top_cities = []
+from myapp import db
+from myapp.models import City
 
 @myapp_obj.route("/", methods=["GET", "POST"])
 def index():
   form = TopCities()
   if form.validate_on_submit():
-    city = form.city_name.data
-    if city in top_cities:
-      flash("The city is already added")
+    city_name = form.city_name.data
+    city_rank = form.city_rank.data
+    is_visited = form.is_visited.data
+    
+    existed_city = City.query.filter_by(name=city_name).first()
+    if existed_city:
+      flash("The city name is already added")
       return redirect("/")
-    top_cities.append(city)
-    flash(f"You added {city} sucessfully")
+    
+    city = City(name=city_name, rank=city_rank, is_visited=is_visited)
+    db.session.add(city)
+    db.session.commit()
+    flash(f"You added {city_name} sucessfully")
+    return redirect("/")
 
-  return render_template("home.html", title="Top Cities", form=form, top_cities=top_cities)
+  return render_template(
+    "home.html", 
+    title="Top Cities", 
+    form=form, 
+    top_cities=City.query.order_by(City.rank).all()
+  )
